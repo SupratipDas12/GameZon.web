@@ -1,15 +1,15 @@
 <?php
 session_start();
 
-// Hardcoded valid credentials
-$validEmail = "user@example.com";
-$validPassword = "1234";
+$con = new mysqli("localhost", "root", "root", "web");
 
-// Get data from form
+if ($con->connect_error) {
+  die("Connection failed: " . $con->connect_error);
+}
+
 $email = trim($_POST['email'] ?? '');
 $password = trim($_POST['password'] ?? '');
 
-// Basic validation
 if ($email === '' || $password === '') {
   echo "Please fill in all fields.";
   exit;
@@ -20,8 +20,16 @@ if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
   exit;
 }
 
-// Check credentials
-if ($email === $validEmail && $password === $validPassword) {
+// Fetch user from DB
+$sql = "SELECT * FROM users WHERE email = ?";
+$stmt = $con->prepare($sql);
+$stmt->bind_param("s", $email);
+$stmt->execute();
+
+$result = $stmt->get_result();
+$user = $result->fetch_assoc();
+
+if ($user && password_verify($password, $user['password'])) {
   $_SESSION['email'] = $email;
   header("Location: dashboard.php");
   exit;
