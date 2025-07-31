@@ -77,7 +77,7 @@ if ($con->connect_error) {
 }
 
 // Use prepared statement to insert name + email into MySQL table
-$stmt = $con->prepare("INSERT INTO name (name, email) VALUES (?, ?)");
+$stmt = $con->prepare("INSERT INTO xxx (name, email) VALUES (?, ?)");
 $stmt->bind_param("ss", $name, $email);
 
 if ($stmt->execute()) {
