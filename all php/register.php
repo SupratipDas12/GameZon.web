@@ -7,10 +7,14 @@ $name     = trim($_POST['name'] ?? '');
 $email    = trim($_POST['email'] ?? '');
 $mobile   = trim($_POST['mobile'] ?? '');
 $password = trim($_POST['password'] ?? '');
-$confirm  = trim($_POST['confirm_password'] ?? '');
+//$confirm  = trim($_POST['confirm_password'] ?? '');
 
 // Basic validation
-if (!$name || !$email || !$mobile || !$password || !$confirm) {
+//if (!$name || !$email || !$mobile || !$password || !$confirm) {
+  //echo "Please fill in all fields.";
+  //exit;
+
+if (!$name || !$email || !$mobile || !$password ) {
   echo "Please fill in all fields.";
   exit;
 }
@@ -30,10 +34,10 @@ if (strlen($password) < 6) {
   exit;
 }
 
-if ($password !== $confirm) {
-  echo "Passwords do not match.";
-  exit;
-}
+//if ($password !== $confirm) {
+  //echo "Passwords do not match.";
+  //exit;
+//}
 
 // Hash the password
 $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
